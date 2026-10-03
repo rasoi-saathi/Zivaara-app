@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zivaara - Apna Style</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{background:linear-gradient(135deg,#ff9a9e,#fecfef);min-height:100vh;display:flex;align-items:center;justify-content:center}
+.card{background:white;padding:30px;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,0.2);width:90%;max-width:400px;text-align:center;animation:fadeIn 1s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.logo{font-size:40px;font-weight:bold;background:linear-gradient(45deg,#ff6a00,#ee0979);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+input{width:100%;padding:12px;margin:10px 0;border:2px solid #eee;border-radius:10px}
+button{width:100%;padding:12px;background:linear-gradient(45deg,#ff6a00,#ee0979);color:white;border:none;border-radius:10px;font-size:16px;cursor:pointer}
+#otpBox{display:none}
+</style>
+</head>
+<body>
+<div class="card">
+<div class="logo">Zivaara ✨</div>
+<p>Apna Style, Apni Pehchan</p><br>
+<div id="loginBox">
+<input type="email" id="email" placeholder="Apna email likho">
+<button onclick="sendOTP()">OTP Bhejo</button>
+</div>
+<div id="otpBox">
+<input type="text" id="otp" placeholder="4-digit OTP likho">
+<button onclick="verifyOTP()">Verify Karo</button>
+</div>
+<p id="msg"></p>
+</div>
+<script>
+// --- YAHAN APNI KEY DALNA ---
+const FIREBASE_CONFIG = "PASTE_YOUR_FIREBASE_WEB_KEY_HERE";
+const EMAILJS_KEY = "PASTE_YOUR_EMAILJS_KEY_HERE";
+
+let generatedOTP;
+function sendOTP(){
+  const email=document.getElementById('email').value;
+  if(!email){alert('Email likho pehle');return;}
+  generatedOTP=Math.floor(1000+Math.random()*9000);
+  document.getElementById('msg').innerText="OTP bheja ja raha hai... ✨";
+  // EmailJS se sundar email jayega
+  setTimeout(()=>{
+    document.getElementById('loginBox').style.display='none';
+    document.getElementById('otpBox').style.display='block';
+    document.getElementById('msg').innerText="Zivaara me aapka swagat hai! OTP aapke email par bhej diya hai 💌 (Demo OTP: "+generatedOTP+")";
+  },1000);
+}
+function verifyOTP(){
+  const otp=document.getElementById('otp').value;
+  if(otp==generatedOTP){
+    document.getElementById('msg').innerText="🎉 Welcome to Zivaara!";
+  }else{
+    document.getElementById('msg').innerText="Galat OTP, fir se try karo";
+  }
+}
+</script>
+</body>
+</html>
